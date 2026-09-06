@@ -8,22 +8,22 @@
 #include "ov7670.h"
 #include "main.h"
 
-const uint8_t OV7670_reg[][2] = {
+const uint8_t ov7670_config_reg[][2] = {
   /* Color mode related */
-  {0x12, 0x0C},   // COM7: QCIF, RGB
-  {0x8C, 0x00},   // RGB444 Disable
-  {0x40, 0x10 + 0xc0},   // RGB565, 00 - FF
-  {0x3A, 0x04 + 8},   // UYVY (why?)
-  {0x3D, 0x80 + 0x00},   // gamma enable, UV auto adjust, UYVY
-  {0xB0, 0x84}, // important
+  {0x12, 0x0C}, // COM7: QCIF, RGB
+  {0x8C, 0x00}, // RGB444: Disable
+  {0x40, 0xD0}, // COM15: RGB565, 00 - FF
+  {0x3A, 0x0C}, // TSLB: UYVY (why?)
+  {0x3D, 0x80}, // COM13: gamma enable, UV auto adjust, UYVY
+  {0xB0, 0x84}, // RSVD: important (why?)
 
   /* clock related */
-  {0x0C, 0x04},  // DCW enable
-  {0x3E, 0x19},  // manual scaling, pclk/=2
-  {0x70, 0x3A},  // scaling_xsc
-  {0x71, 0x35},  // scaling_ysc
-  {0x72, 0x11}, // down sample by 2
-  {0x73, 0xf1}, // DSP clock /= 2
+  {0x0C, 0x04}, // COM3: DCW enable
+  {0x3E, 0x19}, // COM14: manual scaling, pclk/=2, DCW and scaling
+  {0x70, 0x3A}, // SCALING_XSC (how?)
+  {0x71, 0x35}, // SCALING_YSC (how?)
+  {0x72, 0x11}, // SCALING_DCWCTR: down sample by 2
+  {0x73, 0xf1}, // SCALING_PCLK_DIV: enable clock divider, DSP clock /= 2
 
   /* windowing (empirically decided...) */
   {0x17, 0x16},   // HSTART
